@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vaktmester Registrering</title>
+</head>
+<body>
+    <form id="registrationForm" action="https://hooks.zapier.com/hooks/catch/18948164/3vc4yg5/" method="POST">
+        <label for="navn">Navn:</label>
+        <input type="text" id="navn" name="navn" required>
+        <label for="sted">Sted:</label>
+        <input type="text" id="sted" name="sted" required>
+        <input type="hidden" id="latitude" name="latitude">
+        <input type="hidden" id="longitude" name="longitude">
+        <button type="submit">Registrer</button>
+    </form>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    document.getElementById('latitude').value = position.coords.latitude;
+                    document.getElementById('longitude').value = position.coords.longitude;
+                    document.getElementById('registrationForm').submit();
+                }, function(error) {
+                    alert('Geolocation feilet: ' + error.message);
+                });
+            } else {
+                alert('Geolocation er ikke støttet av denne nettleseren.');
+            }
+        });
+    </script>
+</body>
+</html>
